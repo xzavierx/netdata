@@ -207,6 +207,8 @@ extern void strip_last_symbol(
     SKIP_ESCAPED_CHARACTERS_OPTION skip_escaped_characters);
 extern char *strip_double_quotes(char *str, SKIP_ESCAPED_CHARACTERS_OPTION skip_escaped_characters);
 void reload_host_labels(void);
+extern void rrdset_add_label_to_new_list(RRDSET *st, char *key, char *value, LABEL_SOURCE source);
+extern void rrdset_finalize_labels(RRDSET *st);
 
 // ----------------------------------------------------------------------------
 // RRD DIMENSION - this is a metric
@@ -392,6 +394,7 @@ struct rrdset_volatile {
     char *old_title;
     char *old_family;
     char *old_context;
+    struct label *new_labels;
     struct label_index labels;
 };
 
