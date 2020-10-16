@@ -55,8 +55,8 @@ BUFFER *metalog_update_host_buffer(RRDHOST *host)
                    host->timezone,
                    (host->tags) ? host->tags : "");
 
-    netdata_rwlock_rdlock(&host->labels_rwlock);
-    struct label *labels = host->labels;
+    netdata_rwlock_rdlock(&host->labels.labels_rwlock);
+    struct label *labels = host->labels.head;
     while (labels) {
         buffer_sprintf(buffer
             , "LABEL \"%s\" = %d %s\n"
@@ -66,7 +66,7 @@ BUFFER *metalog_update_host_buffer(RRDHOST *host)
 
         labels = labels->next;
     }
-    netdata_rwlock_unlock(&host->labels_rwlock);
+    netdata_rwlock_unlock(&host->labels.labels_rwlock);
 
     buffer_strcat(buffer, "OVERWRITE labels\n");
 
