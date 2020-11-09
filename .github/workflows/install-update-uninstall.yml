@@ -1,0 +1,41 @@
+---
+name: Builder
+on: push
+jobs:
+  source-build2:
+    name: Build & Install
+    strategy:
+      fail-fast: false
+      matrix:
+        distro:
+          - 'ubuntu:20.04'
+        include:
+          - distro: 'ubuntu:20.04'
+            pre: 'apt-get update'
+            rmjsonc: 'apt-get remove -y libjson-c-dev'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone repository
+        uses: actions/checkout@v2
+      - name: install-required-packages.sh on ${{ matrix.distro }}
+        env:
+          PRE: ${{ matrix.pre }}
+          RMJSONC: ${{ matrix.rmjsonc }}
+        run: |
+          echo $PRE > ./prep-cmd.sh
+          echo $RMJSONC > ./rmjsonc.sh && chmod +x ./rmjsonc.sh
+          docker build . -f .github/dockerfiles/Dockerfile.build_test -t test --build-arg BASE=${{ matrix.distro }}
+      - name: Regular build on ${{ matrix.distro }}
+        run: |
+          docker run -w /netdata test /bin/sh -c 'autoreconf -ivf && ./configure && make -j2'
+      - name: netdata-installer on ${{ matrix.distro }}, disable cloud
+        run: |
+          docker run -w /netdata test /bin/sh -c './netdata-installer.sh --dont-wait --dont-start-it --disable-cloud'
+      - name: netdata-installer on ${{ matrix.distro }}, require cloud
+        run: |
+          docker run -w /netdata test /bin/sh -c './netdata-installer.sh --dont-wait --dont-start-it --require-cloud'
+      - name: netdata-installer on ${{ matrix.distro }}, require cloud, no JSON-C
+        if: matrix.rmjsonc != ''
+        run: |
+          docker run -w /netdata test \
+              /bin/sh -c '/netdata/rmjsonc.sh && ./netdata-installer.sh --dont-wait --dont-start-it --require-cloud'
