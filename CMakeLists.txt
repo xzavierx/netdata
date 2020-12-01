@@ -598,6 +598,10 @@ set(RRD_PLUGIN_FILES
         database/rrdsetvar.h
         database/rrdvar.c
         database/rrdvar.h
+        database/sqlite/sqlite_functions.c
+        database/sqlite/sqlite_functions.h
+        database/sqlite/sqlite3.c
+        database/sqlite/sqlite3.h
         database/engine/rrdengine.c
         database/engine/rrdengine.h
         database/engine/rrddiskprotocol.h
@@ -613,7 +617,6 @@ set(RRD_PLUGIN_FILES
         database/engine/pagecache.h
         database/engine/rrdenglocking.c
         database/engine/rrdenglocking.h
-        database/engine/metadata_log/metadatalog.c
         database/engine/metadata_log/metadatalog.h
         database/engine/metadata_log/metadatalogapi.c
         database/engine/metadata_log/metadatalogapi.h
@@ -624,8 +627,6 @@ set(RRD_PLUGIN_FILES
         database/engine/metadata_log/metalogpluginsd.h
         database/engine/metadata_log/compaction.c
         database/engine/metadata_log/compaction.h
-        database/engine/global_uuid_map/global_uuid_map.c
-        database/engine/global_uuid_map/global_uuid_map.h
         )
 
 set(WEB_PLUGIN_FILES
@@ -1271,6 +1272,7 @@ endif()
         -Wl,--wrap=connect_to_one_of
         -Wl,--wrap=create_main_rusage_chart
         -Wl,--wrap=send_main_rusage
+        -Wl,--wrap=simple_connector_end_batch
         ${PROMETHEUS_REMOTE_WRITE_LINK_OPTIONS}
         ${KINESIS_LINK_OPTIONS}
         ${PUBSUB_LINK_OPTIONS}
@@ -1293,6 +1295,7 @@ endif()
         -Wl,--wrap=web_client_api_request_v1
         -Wl,--wrap=rrdhost_find_by_guid
         -Wl,--wrap=rrdset_find_byname
+        -Wl,--wrap=sql_create_host_by_uuid
         -Wl,--wrap=rrdset_find
         -Wl,--wrap=rrdpush_receiver_thread_spawn
         -Wl,--wrap=debug_int
@@ -1317,6 +1320,7 @@ endif()
         -Wl,--wrap=web_client_api_request_v1
         -Wl,--wrap=rrdhost_find_by_guid
         -Wl,--wrap=rrdset_find_byname
+        -Wl,--wrap=sql_create_host_by_uuid
         -Wl,--wrap=rrdset_find
         -Wl,--wrap=rrdpush_receiver_thread_spawn
         -Wl,--wrap=debug_int

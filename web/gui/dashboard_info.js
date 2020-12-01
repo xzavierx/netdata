@@ -570,6 +570,13 @@ netdataDashboard.menu = {
         icon: '<i class="fas fa-comments"></i>',
         info: 'Summary, namespaces and topics performance data for the <b><a href="http://pulsar.apache.org/">Apache Pulsar</a></b> pub-sub messaging system.'
     },
+
+    'alarms': {
+        title: 'Alarms',
+        icon: '<i class="fas fa-bell"></i>',
+        info: 'Charts showing alarm status over time. More details <a href="https://github.com/netdata/netdata/blob/master/collectors/python.d.plugin/alarms/README.md" target="_blank">here</a>.'
+    },
+
 };
 
 
@@ -3402,7 +3409,7 @@ netdataDashboard.context = {
                 return '<div data-netdata="' + id + '"'
                     + ' data-dimensions="queue_message_in"'
                     + ' data-chart-library="easypiechart"'
-                    + ' data-title="MQTT Recieve Rate"'
+                    + ' data-title="MQTT Receive Rate"'
                     + ' data-units="messages/s"'
                     + ' data-gauge-adjust="width"'
                     + ' data-width="14%"'
@@ -3653,5 +3660,89 @@ netdataDashboard.context = {
                     + ' role="application"></div>';
             },
         ],
+    },
+
+    // ------------------------------------------------------------------------
+    // Nvidia-smi
+
+    'nvidia_smi.fan_speed': {
+        heads: [
+            function (os, id) {
+                void (os);
+                return '<div data-netdata="' + id + '"'
+                    + ' data-dimensions="speed"'
+                    + ' data-chart-library="easypiechart"'
+                    + ' data-title="Fan Speed"'
+                    + ' data-units="percentage"'
+                    + ' data-gauge-adjust="width"'
+                    + ' data-width="12%"'
+                    + ' data-before="0"'
+                    + ' data-after="-CHART_DURATION"'
+                    + ' data-points="CHART_DURATION"'
+                    + ' data-colors="' + NETDATA.colors[4] + '"'
+                    + ' data-decimal-digits="2"'
+                    + ' role="application"></div>';
+            }
+        ]
+    },
+    'nvidia_smi.temperature': {
+        heads: [
+            function (os, id) {
+                void (os);
+                return '<div data-netdata="' + id + '"'
+                    + ' data-dimensions="temp"'
+                    + ' data-chart-library="easypiechart"'
+                    + ' data-title="Temperature"'
+                    + ' data-units="celsius"'
+                    + ' data-gauge-adjust="width"'
+                    + ' data-width="12%"'
+                    + ' data-before="0"'
+                    + ' data-after="-CHART_DURATION"'
+                    + ' data-points="CHART_DURATION"'
+                    + ' data-colors="' + NETDATA.colors[3] + '"'
+                    + ' data-decimal-digits="2"'
+                    + ' role="application"></div>';
+            }
+        ]
+    },
+    'nvidia_smi.memory_allocated': {
+        heads: [
+            function (os, id) {
+                void (os);
+                return '<div data-netdata="' + id + '"'
+                    + ' data-dimensions="used"'
+                    + ' data-chart-library="easypiechart"'
+                    + ' data-title="Used Memory"'
+                    + ' data-units="MiB"'
+                    + ' data-gauge-adjust="width"'
+                    + ' data-width="12%"'
+                    + ' data-before="0"'
+                    + ' data-after="-CHART_DURATION"'
+                    + ' data-points="CHART_DURATION"'
+                    + ' data-colors="' + NETDATA.colors[4] + '"'
+                    + ' data-decimal-digits="2"'
+                    + ' role="application"></div>';
+            }
+        ]
+    },
+    'nvidia_smi.power': {
+        heads: [
+            function (os, id) {
+                void (os);
+                return '<div data-netdata="' + id + '"'
+                    + ' data-dimensions="power"'
+                    + ' data-chart-library="easypiechart"'
+                    + ' data-title="Power Utilization"'
+                    + ' data-units="watts"'
+                    + ' data-gauge-adjust="width"'
+                    + ' data-width="12%"'
+                    + ' data-before="0"'
+                    + ' data-after="-CHART_DURATION"'
+                    + ' data-points="CHART_DURATION"'
+                    + ' data-colors="' + NETDATA.colors[2] + '"'
+                    + ' data-decimal-digits="2"'
+                    + ' role="application"></div>';
+            }
+        ]
     },
 };
