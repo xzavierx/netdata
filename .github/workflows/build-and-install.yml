@@ -17,7 +17,7 @@ jobs:
           - 'x86_64'
     steps:
       - name: Git clone repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
           submodules: recursive
@@ -108,7 +108,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git clone repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: recursive
       - name: install-required-packages.sh on ${{ matrix.distro }}
