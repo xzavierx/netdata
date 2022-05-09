@@ -107,7 +107,7 @@ jobs:
           fi
       - name: Setup QEMU
         if: matrix.platform != 'linux/amd64' && matrix.platform != 'linux/i386'
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v2
       - name: Prepare Docker Environment
         shell: bash
         run: |
