@@ -51,7 +51,7 @@ jobs:
           submodules: recursive
       - name: Setup QEMU
         if: matrix.platforms != 'linux/i386'
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v2
       - name: Setup Buildx
         uses: docker/setup-buildx-action@v1
       - name: Build
@@ -81,7 +81,7 @@ jobs:
         run: |
           echo "tags=netdata/netdata:latest,netdata/netdata:edge" >> $GITHUB_ENV
       - name: Setup QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v2
       - name: Setup Buildx
         uses: docker/setup-buildx-action@v1
       - name: Docker Hub Login
