@@ -24,7 +24,7 @@ jobs:
       - name: Build
         run: .github/scripts/build-static.sh ${{ matrix.arch }}
       - name: Save Packages
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3.1.1
         with:
           name: ${{ matrix.arch }}-static-builds
           path: ${{ github.workspace }}/artifacts/*
